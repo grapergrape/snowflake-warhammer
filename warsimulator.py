@@ -75,9 +75,7 @@ class WarSimulator:
             unit['history'] = self.generate_person_history(unit['name'], race)
         df = pl.DataFrame(faction_data)  # Use polars DataFrame
         # rename columns to FIGHTER_NAME, CLASS, ORIGIN_HISTORY
-        df = df.with_column(pl.col("name").rename("FIGHTER_NAME"))
-        df = df.with_column(pl.col("unit").rename("CLASS"))
-        df = df.with_column(pl.col("history").rename("ORIGIN_HISTORY"))
+        df = df.rename({'name': 'FIGHTER_NAME', 'unit': 'CLASS', 'history': 'ORIGIN_HISTORY'})
         return df
 
 # Example usage
