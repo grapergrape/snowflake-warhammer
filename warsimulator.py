@@ -73,10 +73,15 @@ class WarSimulator:
         faction_data = self.assign_units(race)
         for unit in faction_data:
             unit['history'] = self.generate_person_history(unit['name'], race)
-        return pl.DataFrame(faction_data)  # Use polars DataFrame
+        df = pl.DataFrame(faction_data)  # Use polars DataFrame
+        # rename columns to FIGHTER_NAME, CLASS, ORIGIN_HISTORY
+        df = df.with_column(pl.col("name").rename("FIGHTER_NAME"))
+        df = df.with_column(pl.col("unit").rename("CLASS"))
+        df = df.with_column(pl.col("history").rename("ORIGIN_HISTORY"))
+        return df
 
 # Example usage
 if __name__ == "__main__":
     war_simulator = WarSimulator(OPENAI_API_KEY)
     orc_data = war_simulator.generate_faction_data('Orc')
-    print(orc_data)  
+    # struct orc data as a DataFrame with columns 
