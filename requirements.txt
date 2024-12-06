@@ -1,3 +1,4 @@
 polars 
 python-dotenv
 langchain_openai
+snowflake-connector-python
